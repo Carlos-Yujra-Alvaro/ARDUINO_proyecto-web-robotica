@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Arduino: El corazón de la era electrónica</title>
+
+        <!-- Bootstrap 5 -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet" />
+
+        <!-- Google Fonts -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap"
+            rel="stylesheet" />
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+        <!-- Bootstrap Icons -->
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+        <!-- Lottie (robots animados) -->
+        <script
+            src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+        <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0d0d0d;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: radial-gradient(circle at center, #00111a 0%, #000 100%);
+        }
+
+        .robot-anim {
+            position: fixed;
+            bottom: 0;
+            width: 200px;
+            height: 200px;
+            z-index: -1;
+            opacity: 0.8;
+            animation: moveRobot 15s linear infinite alternate;
+        }
+
+        .robot-left { left: 5%; }
+        .robot-right { right: 5%; animation-delay: 5s; }
+
+        @keyframes moveRobot {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px) scale(1.02); }
+            100% { transform: translateY(0px); }
+        }
+
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.85);
+            box-shadow: 0 0 10px #00d1ff;
+        }
+
+        .navbar-brand { color: #00d1ff !important; font-weight: 600; }
+        .nav-link { color: #ccc !important; transition: 0.3s; }
+        .nav-link:hover { color: #00d1ff !important; }
+
+        .hero {
+            text-align: center;
+            padding: 120px 20px;
+            color: #00d1ff;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            text-shadow: 0 0 10px #00d1ff, 0 0 20px #00d1ff;
+            animation: glow 2s infinite alternate;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-top: 20px;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 5px #00d1ff, 0 0 10px #00d1ff; }
+            to { text-shadow: 0 0 20px #00d1ff, 0 0 40px #00d1ff; }
+        }
+
+        .btn-info {
+            border: 2px solid #00d1ff;
+            color: #00d1ff;
+            background: transparent;
+            transition: 0.3s;
+            border-radius: 25px;
+            font-weight: 600;
+        }
+
+        .btn-info:hover {
+            background: #00d1ff;
+            color: #000;
+            box-shadow: 0 0 20px #00d1ff;
+        }
+
+        .section { padding: 70px 50px 100px 20px; }
+        .section-title {
+            color: #00d1ff;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Flip Cards */
+        .flip-card {
+            background-color: transparent;
+            width: 100%;
+            perspective: 1000px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .flip-card-front img {
+            width: 100%;
+            height: auto;
+            max-height: 670px;
+            object-fit: contain;
+            background: #000;
+        }
+
+        .flip-card-back {
+            background: #1a1a2e;
+            color: #00d1ff;
+            transform: rotateY(180deg);
+            text-align: center;
+            padding: 30px;
+        }
+
+        .download-btn {
+            margin-top: 15px;
+            border: 2px solid #00d1ff;
+            color: #00d1ff;
+            border-radius: 25px;
+            padding: 8px 20px;
+            text-decoration: none;
+            transition: 0.3s;
+            display: inline-block;
+        }
+
+        .download-btn:hover {
+            background: #00d1ff;
+            color: #000;
+        }
+
+        /* Videos */
+        .card {
+            background-color: #1a1a2e;
+            border: none;
+            border-radius: 15px;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 20px #00d1ff;
+        }
+
+        .card h4 { color: #00d1ff; }
+        iframe { border-radius: 10px; }
+
+        footer {
+            background: #000;
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #00d1ff;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+    </style>
+    </head>
+
+    <body>
+        <div id="particles-js"></div>
+
+        <!-- Robots animados -->
+        <lottie-player
+            src="https://lottie.host/7e5dc3aa-4c0c-4f2c-88f8-1b8d48083b35/6XvDz1Tjtd.json"
+            background="transparent" speed="1" class="robot-anim robot-left"
+            loop autoplay></lottie-player>
+        <lottie-player
+            src="https://lottie.host/64b9941a-fba3-4e5a-96b8-41b8c2b9b896/L7bM0y7oUu.json"
+            background="transparent" speed="1" class="robot-anim robot-right"
+            loop autoplay></lottie-player>
+
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="#">Arduino Era Electrónica</a>
+                <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link"
+                                href="#tripticos">Trípticos</a></li>
+                        <li class="nav-item"><a class="nav-link"
+                                href="#videos">Videos</a></li>
+                        <li class="nav-item"><a class="nav-link"
+                                href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero -->
+        <section class="hero">
+            <h1>ARDUINO: EL CORAZÓN DE LA ERA ELECTRÓNICA</h1>
+            <p>Explora el mundo de la robótica, los circuitos y la innovación
+                tecnológica.</p>
+            <a href="#tripticos" class="btn btn-info mt-4">Explorar
+                contenidos</a>
+        </section>
+
+        <!-- Trípticos -->
+        <section id="tripticos" class="section">
+            <h2 class="section-title">Trípticos Descargables</h2>
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <img src="img1.png" alt="Arduino Básico">
+                                </div>
+                                <div class="flip-card-back">
+                                    <h4>Robótica en Acción</h4>
+                                    <p>Descubre cómo la creatividad y la
+                                        tecnología se unen para crear robots que
+                                        solucionan problemas, fomentan el
+                                        trabajo en equipo y promueven la
+                                        innovación. Aprende fundamentos de
+                                        programación, electrónica y diseño
+                                        mientras construyes proyectos como
+                                        "ROBO-FUT" y "ROBOT EVA".</p>
+                                    <a href="FOLLETO_ROBOTICA.pdf" download
+                                        class="download-btn">Descargar PDF</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <img src="img2.png"
+                                        alt="Robótica Educativa">
+                                </div>
+                                <div class="flip-card-back">
+                                    <h4>Sistema de Riego Inteligente</h4>
+                                    <p>Optimiza el uso del agua, mejora la
+                                        productividad de cultivos y jardines, y
+                                        promueve prácticas sostenibles. Este
+                                        proyecto combina tecnología, eficiencia
+                                        y cuidado del medio ambiente para
+                                        generar un impacto positivo en la
+                                        región.</p>
+                                    <a href="TRI.pdf" download
+                                        class="download-btn">Descargar PDF</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <img src="img3.png"
+                                        alt="Innovación y Futuro">
+                                </div>
+                                <div class="flip-card-back">
+                                    <h4>Robot Casero Creativo</h4>
+                                    <p>Aprende robótica de manera práctica y
+                                        divertida construyendo un robot casero
+                                        con materiales reciclados. Descubre cómo
+                                        aplicar motores, conexiones eléctricas y
+                                        control de movimiento mientras fomentas
+                                        creatividad y cuidado del medio
+                                        ambiente.</p>
+                                    <a href="Triptico_robot_a_control.pdf"
+                                        download class="download-btn">Descargar
+                                        PDF</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Videos -->
+        <section id="videos" class="section">
+            <h2 class="section-title">Videos Educativos</h2>
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card p-3">
+                            <h4><i class="fa-solid fa-robot"></i> Armado del
+                                Robot EVA</h4>
+                            <iframe
+                                src="https://www.youtube.com/embed/T_9-DlvJkWk"
+                                height="200" width="100%" frameborder="0"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card p-3">
+                            <h4><i class="fa-solid fa-microchip"></i> Conexiones
+                                del controlador</h4>
+                            <iframe
+                                src="https://www.youtube.com/embed/IIKRX4tDj2k"
+                                height="200" width="100%" frameborder="0"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card p-3">
+                            <h4><i class="fa-solid fa-gears"></i> Funcionamiento
+                                del L298N</h4>
+                            <iframe
+                                src="https://www.youtube.com/embed/vccGVSt8NBM"
+                                height="200" width="100%" frameborder="0"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card p-3">
+                            <h4><i class="fa-solid fa-car"></i> Materiales del
+                                auto de carreras</h4>
+                            <iframe
+                                src="https://www.youtube.com/embed/HgDF3GczAoc"
+                                height="200" width="100%" frameborder="0"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card p-3">
+                            <h4><i class="fa-solid fa-robot"></i> Armado con
+                                motores</h4>
+                            <iframe
+                                src="https://www.youtube.com/embed/zXv8NZfYEkM"
+                                height="200" width="100%" frameborder="0"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card p-3">
+                            <h4><i class="fa-solid fa-droplet"></i> Sistema de
+                                riego automático</h4>
+                            <iframe
+                                src="https://www.youtube.com/embed/12MlQ1EpBbM"
+                                height="200" width="100%" frameborder="0"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contacto -->
+        <section id="contacto" class="section py-5 bg-dark">
+            <h2 class="section-title text-center mb-4">Contacto</h2>
+            <div class="container d-flex flex-column align-items-center gap-3">
+                <div class="contact-card p-3 rounded shadow text-center"
+                    style="max-width: 400px; background: #1b1a1a;">
+                    <p><i class="bi bi-telephone-fill"></i>
+                        <strong>Teléfonos:</strong> 69896508</p>
+                    <p><i class="bi bi-envelope-fill"></i>
+                        <strong>Correo:</strong> <a
+                            href="mailto:alvaromariluz8@gmail.com"
+                            class="text-info">alvaromariluz8@gmail.com</a></p>
+                    <p><i class="bi bi-info-circle-fill"></i> Proyecto educativo
+                        para jóvenes y docentes de la Unidad Educativa.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2025 - Arduino: El corazón de la era electrónica |
+                Diseñado por Carlos Yujra Alvaro | Cel: 77545798</p>
+        </footer>
+
+        <!-- Scripts -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+        <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 80 },
+                "color": { "value": "#00d1ff" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5 },
+                "size": { "value": 3 },
+                "line_linked": { "enable": true, "distance": 150, "color": "#00d1ff", "opacity": 0.4, "width": 1 },
+                "move": { "enable": true, "speed": 3 }
+            },
+            "interactivity": {
+                "events": { "onhover": { "enable": true, "mode": "repulse" } },
+                "modes": { "repulse": { "distance": 100 } }
+            },
+            "retina_detect": true
+        });
+    </script>
+    </body>
+</html>
